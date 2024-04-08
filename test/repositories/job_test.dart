@@ -41,5 +41,17 @@ void main() {
       var result = await repository.update(job);
       expect(result, 1);
     });
+
+    test("A job can be deleted", () async {
+      final repository = JobRepository(databaseHelper);
+      final job = Job(name: "Job 1", id: 1);
+
+      when(databaseHelper.database).thenAnswer((_) async => mockDb);
+      when(mockDb.delete('jobs', where: 'id = ?', whereArgs: [job.id]))
+          .thenAnswer((_) async => 1);
+
+      var result = await repository.delete(job);
+      expect(result, 1);
+    });
   });
 }

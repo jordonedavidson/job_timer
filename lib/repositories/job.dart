@@ -57,8 +57,10 @@ class JobRepository implements IJobRepository {
   }
 
   @override
-  Future<void> delete(Job job) async {
+  Future<int> delete(Job job) async {
     final db = await _databaseHelper.database;
-    await db.delete('jobs', where: 'id = ?', whereArgs: [job.id]);
+    final affectedRows =
+        await db.delete('jobs', where: 'id = ?', whereArgs: [job.id]);
+    return affectedRows;
   }
 }
