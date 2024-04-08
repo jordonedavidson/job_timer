@@ -4,7 +4,7 @@ import 'package:job_timer/models/time_entry.dart';
 /// Defines all ways to interact with a job.
 class Job {
   int? id;
-  final String name;
+  String? name;
   final List<TimeEntry> entries = [];
 
   Job({this.id, required this.name});

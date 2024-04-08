@@ -49,9 +49,11 @@ class JobRepository implements IJobRepository {
   }
 
   @override
-  Future<void> update(Job job) async {
+  Future<int> update(Job job) async {
     final db = await _databaseHelper.database;
-    await db.update('jobs', job.toMap(), where: 'id = ?', whereArgs: [job.id]);
+    final affectedRows = await db
+        .update('jobs', job.toMap(), where: 'id = ?', whereArgs: [job.id]);
+    return affectedRows;
   }
 
   @override
