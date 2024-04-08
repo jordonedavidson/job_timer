@@ -53,5 +53,24 @@ void main() {
       var result = await repository.delete(job);
       expect(result, 1);
     });
+
+    test("Find all jobs", () async {
+      final repository = JobRepository(databaseHelper);
+      final jobsList = [
+        Job(name: "Job 1", id: 1),
+        Job(name: "Job 2", id: 2),
+        Job(name: "Job 3", id: 3),
+      ];
+      when(databaseHelper.database).thenAnswer((_) async => mockDb);
+      when(mockDb.query('jobs')).thenAnswer((_) async =>
+          [jobsList[0].toMap(), jobsList[1].toMap(), jobsList[2].toMap()]);
+      var result = await repository.findAll();
+      expect(result[0].name, jobsList[0].name);
+      expect(result[1].name, jobsList[1].name);
+      expect(result[2].name, jobsList[2].name);
+      expect(result[0].id, jobsList[0].id);
+      expect(result[1].id, jobsList[1].id);
+      expect(result[2].id, jobsList[2].id);
+    });
   });
 }
