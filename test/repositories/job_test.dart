@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:job_timer/models/database_helper.dart';
 import 'package:job_timer/models/job.dart';
@@ -54,7 +56,7 @@ void main() {
       expect(result, 1);
     });
 
-    test("Find all jobs", () async {
+    test("Find all jobs returns list when there are results", () async {
       final repository = JobRepository(databaseHelper);
       final jobsList = [
         Job(name: "Job 1", id: 1),
@@ -71,6 +73,16 @@ void main() {
       expect(result[0].id, jobsList[0].id);
       expect(result[1].id, jobsList[1].id);
       expect(result[2].id, jobsList[2].id);
+    });
+
+    test("Find all jobs returns an empty list when there are no results",
+        () async {
+      final repository = JobRepository(databaseHelper);
+      when(databaseHelper.database).thenAnswer((_) async => mockDb);
+      when(mockDb.query('jobs')).thenAnswer((_) async => []);
+
+      var result = await repository.findAll();
+      expect(result, []);
     });
   });
 }
