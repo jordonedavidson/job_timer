@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:job_timer/models/database_helper.dart';
 import 'package:job_timer/models/job.dart';
