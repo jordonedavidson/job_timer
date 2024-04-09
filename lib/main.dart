@@ -1,7 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:job_timer/widgets/app_theme_data.dart';
+import 'package:job_timer/widgets/job_listing.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main() {
+Future main() async {
+  if (Platform.isWindows || Platform.isLinux) {
+    // Initialize FFI
+    sqfliteFfiInit();
+  }
+  databaseFactory = databaseFactoryFfi;
   runApp(const MyApp());
 }
 
@@ -19,22 +28,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Center(child: Text('Job Timer')),
         ),
-        body: ListView(
-          children: const [
-            ListTile(
-              title: Text(
-                "Job One",
-              ),
-              trailing: Text("00:30:20"),
-            ),
-            ListTile(
-              title: Text(
-                "Job Two",
-              ),
-              trailing: Text("00:30:20"),
-            ),
-          ],
-        ),
+        body: const JobListing(),
       ),
     );
   }

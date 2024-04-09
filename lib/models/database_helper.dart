@@ -25,14 +25,15 @@ class DatabaseHelper {
       CREATE TABLE jobs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL  
-      ),
+      );
       CREATE TABLE time_entries (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         jobid INTEGER NOT NULL,
         start TEXT,
-        end TEXT
-      ),
-      CREATE INDEX time_entries_jobid_index ON time_entries (jobid)
+        end TEXT,
+        FOREIGN KEY (jobid) REFERENCES jobs (id) ON DELETE CASCADE
+      );
+      CREATE INDEX time_entries_jobid_index ON time_entries (jobid);
     ''');
   }
 }
