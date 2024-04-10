@@ -27,6 +27,15 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Center(child: Text('Job Timer')),
+          actions: [
+            IconButton(
+              onPressed: () => {},
+              icon: const Icon(
+                Icons.add,
+              ),
+              tooltip: "Add Job",
+            ),
+          ],
         ),
         body: const JobListing(),
       ),

@@ -44,6 +44,7 @@ class _JobListingState extends State<JobListing> {
                       Job job = jobs[index];
                       return ListTile(
                         title: Text(job.name ?? 'No name'),
+                        trailing: Text('${job.totalTime}'),
                       );
                     });
               } else {
