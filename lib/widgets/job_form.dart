@@ -15,11 +15,11 @@ class _JobFormState extends State<JobForm> {
   final _formKey = GlobalKey<FormState>();
   final textController = TextEditingController();
   final databaseHelper = DatabaseHelper();
-  final jobRepository = JobRepository(databaseHelper);
 
-  void _addJob(String name) {
+  void _addJob(String name) async {
+    JobRepository jobRepository = JobRepository(databaseHelper);
     Job job = Job(name: name);
-    Future<Job> newJob = jobRepository.create(job);
+    var newJob = await jobRepository.create(job);
     print(newJob);
   }
 
