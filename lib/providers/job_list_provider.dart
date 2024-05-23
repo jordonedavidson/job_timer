@@ -21,4 +21,16 @@ class JobListProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+  /// Adds a [job] to the list of jobs and notifies the listeners.
+  ///
+  /// The [job] parameter is the job to be added to the list.
+  ///
+  /// This function does not return anything.
+  Future<void> addJob(Job job) async {
+    await JobRepository(DatabaseHelper()).create(job);
+
+    _jobs.add(job);
+    notifyListeners();
+  }
 }

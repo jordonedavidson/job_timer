@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:job_timer/models/database_helper.dart';
+
 import 'package:job_timer/models/job.dart';
-import 'package:job_timer/repositories/job.dart';
+import 'package:job_timer/providers/job_list_provider.dart';
 
 class JobForm extends StatefulWidget {
   const JobForm({super.key});
@@ -14,13 +14,10 @@ class _JobFormState extends State<JobForm> {
   // This allows us to validate the form.
   final _formKey = GlobalKey<FormState>();
   final textController = TextEditingController();
-  final databaseHelper = DatabaseHelper();
 
   void _addJob(String name) async {
-    JobRepository jobRepository = JobRepository(databaseHelper);
     Job job = Job(name: name);
-    var newJob = await jobRepository.create(job);
-    print(newJob);
+    await JobListProvider().addJob(job);
   }
 
   @override
