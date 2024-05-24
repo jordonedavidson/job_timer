@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:job_timer/models/job.dart';
 import 'package:job_timer/providers/job_list_provider.dart';
+import 'package:provider/provider.dart';
 
 class JobForm extends StatefulWidget {
   const JobForm({super.key});
@@ -16,8 +17,9 @@ class _JobFormState extends State<JobForm> {
   final textController = TextEditingController();
 
   void _addJob(String name) async {
+    final jobList = Provider.of<JobListProvider>(context, listen: false);
     Job job = Job(name: name);
-    await JobListProvider().addJob(job);
+    await jobList.addJob(job);
   }
 
   @override
