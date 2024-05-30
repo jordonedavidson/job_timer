@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_timer/models/job.dart';
+import 'package:job_timer/pages/timer_page.dart';
 import 'package:job_timer/providers/job_list_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -34,8 +35,17 @@ class _JobListingState extends State<JobListing> {
               itemBuilder: (context, index) {
                 Job job = jobs[index];
                 return ListTile(
+                  leading: const Icon(Icons.timer_rounded),
                   title: Text(job.name ?? 'No name'),
                   trailing: Text('${job.totalTime}'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TimerPage(job: job),
+                      ),
+                    );
+                  },
                 );
               });
         } else {
