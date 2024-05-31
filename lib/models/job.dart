@@ -1,11 +1,13 @@
+import 'package:job_timer/models/database_helper.dart';
 import 'package:job_timer/models/time_entry.dart';
+import 'package:job_timer/repositories/time_entry.dart';
 
 /// Job class.
 /// Defines all ways to interact with a job.
 class Job {
   int? id;
   String? name;
-  final List<TimeEntry> entries = [];
+  List<TimeEntry> entries = [];
 
   Job({this.id, required this.name});
 
@@ -17,8 +19,11 @@ class Job {
     return {'id': id, 'name': name};
   }
 
-  Duration get totalTime {
+  Future<Duration> get totalTime async {
     var runningTotal = 0;
+    TimeEntryRepository timeEntryRepository =
+        TimeEntryRepository(DatabaseHelper());
+    entries = await timeEntryRepository.findByJobId(id!);
     for (var entry in entries) {
       runningTotal = runningTotal + entry.elapsedTime.inSeconds;
     }

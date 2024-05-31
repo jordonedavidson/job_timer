@@ -17,7 +17,7 @@ class JobTimer extends StatefulWidget {
 
 class _JobTimerState extends State<JobTimer> {
   bool isRunning = false;
-  Duration elapsedTime = Duration();
+  Duration elapsedTime = const Duration(seconds: 0);
   Timer? timer;
   late TimeEntry jobTimer;
   TimeEntryRepository timeEntryRepository =
@@ -74,7 +74,7 @@ class _JobTimerState extends State<JobTimer> {
         child: Column(
           children: [
             Text(
-              '${elapsedTime.inHours.toString().padLeft(2, '0')}h${elapsedTime.inMinutes.remainder(60).toString().padLeft(2, '0')}s${elapsedTime.inSeconds.remainder(60).toString().padLeft(2, '0')}',
+              '${elapsedTime.inHours.toString().padLeft(2, '0')} h ${elapsedTime.inMinutes.remainder(60).toString().padLeft(2, '0')} m ${elapsedTime.inSeconds.remainder(60).toString().padLeft(2, '0')}',
               style: const TextStyle(fontSize: 80),
             ),
             const SizedBox(
