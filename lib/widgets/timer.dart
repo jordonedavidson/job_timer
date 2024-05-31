@@ -32,11 +32,16 @@ class _JobTimerState extends State<JobTimer> {
   void startTimer() async {
     jobTimer.start = DateTime.now();
     TimeEntry savedTimer = await timeEntryRepository.create(jobTimer);
-    timer =
-        Timer.periodic(const Duration(seconds: 1), (_) => jobTimer.elapsedTime);
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => updateTimer());
     setState(() {
       jobTimer = savedTimer;
       isRunning = true;
+    });
+  }
+
+  void updateTimer() {
+    setState(() {
+      elapsedTime = jobTimer.elapsedTime;
     });
   }
 
@@ -48,6 +53,9 @@ class _JobTimerState extends State<JobTimer> {
       throw Exception('Failed to stop timer');
     }
     setState(() {
+      jobTimer.id = null;
+      jobTimer.start = null;
+      jobTimer.end = null;
       isRunning = false;
     });
   }
@@ -66,7 +74,7 @@ class _JobTimerState extends State<JobTimer> {
         child: Column(
           children: [
             Text(
-              timer == null ? '00:00:00' : jobTimer.elapsedTime.toString(),
+              '${elapsedTime.inHours.toString().padLeft(2, '0')}h${elapsedTime.inMinutes.remainder(60).toString().padLeft(2, '0')}s${elapsedTime.inSeconds.remainder(60).toString().padLeft(2, '0')}',
               style: const TextStyle(fontSize: 80),
             ),
             const SizedBox(
