@@ -1,41 +1,48 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:job_timer/models/database_helper.dart';
 import 'package:job_timer/models/time_entry.dart';
+import 'package:job_timer/providers/job_list_provider.dart';
 import 'package:job_timer/repositories/time_entry.dart';
+import 'package:provider/provider.dart';
 
-class Timer extends StatefulWidget {
-  late int jobId;
-  Timer({super.key, required this.jobId});
+class JobTimer extends StatefulWidget {
+  final int jobId;
+  const JobTimer({super.key, required this.jobId});
 
   @override
-  State<Timer> createState() => _TimerState();
+  State<JobTimer> createState() => _JobTimerState();
 }
 
-class _TimerState extends State<Timer> {
+class _JobTimerState extends State<JobTimer> {
   bool isRunning = false;
-  Duration elapsedTime = const Duration(seconds: 0);
-  late TimeEntry timer;
+  Duration elapsedTime = Duration();
+  Timer? timer;
+  late TimeEntry jobTimer;
   TimeEntryRepository timeEntryRepository =
       TimeEntryRepository(DatabaseHelper());
 
   @override
   void initState() {
     super.initState();
-    timer = TimeEntry(jobid: widget.jobId);
+    jobTimer = TimeEntry(jobid: widget.jobId);
   }
 
   void startTimer() async {
-    timer.start = DateTime.now();
-    TimeEntry savedTimer = await timeEntryRepository.create(timer);
+    jobTimer.start = DateTime.now();
+    TimeEntry savedTimer = await timeEntryRepository.create(jobTimer);
+    timer =
+        Timer.periodic(const Duration(seconds: 1), (_) => jobTimer.elapsedTime);
     setState(() {
-      timer = savedTimer;
+      jobTimer = savedTimer;
       isRunning = true;
     });
   }
 
   void stopTimer() async {
-    timer.end = DateTime.now();
-    int affectedRows = await timeEntryRepository.update(timer);
+    jobTimer.end = DateTime.now();
+    int affectedRows = await timeEntryRepository.update(jobTimer);
 
     if (affectedRows != 1) {
       throw Exception('Failed to stop timer');
@@ -46,6 +53,12 @@ class _TimerState extends State<Timer> {
   }
 
   @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -53,7 +66,7 @@ class _TimerState extends State<Timer> {
         child: Column(
           children: [
             Text(
-              timer.elapsedTime.toString(),
+              timer == null ? '00:00:00' : jobTimer.elapsedTime.toString(),
               style: const TextStyle(fontSize: 80),
             ),
             const SizedBox(
@@ -63,13 +76,21 @@ class _TimerState extends State<Timer> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                    onPressed: () => startTimer(),
+                    onPressed: () {
+                      startTimer();
+                      Provider.of<JobListProvider>(context, listen: false)
+                          .getAllJobs();
+                    },
                     icon: const Icon(
                       Icons.play_arrow,
                       size: 50,
                     )),
                 IconButton(
-                    onPressed: () => stopTimer(),
+                    onPressed: () {
+                      stopTimer();
+                      Provider.of<JobListProvider>(context, listen: false)
+                          .getAllJobs();
+                    },
                     icon: const Icon(
                       Icons.stop,
                       size: 50,

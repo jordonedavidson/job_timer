@@ -45,7 +45,7 @@ class JobRepository implements IJobRepository {
   Future<Job> create(Job job) async {
     final db = await _databaseHelper.database;
     job.id = await db.insert('jobs', job.toMap());
-    print('job id: ${job.id}');
+
     return job;
   }
 

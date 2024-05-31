@@ -12,7 +12,7 @@ class TimerPage extends StatelessWidget {
       appBar: AppBar(
         title: Center(child: Text(job.name!)),
       ),
-      body: Timer(
+      body: JobTimer(
         jobId: job.id!,
       ),
     );

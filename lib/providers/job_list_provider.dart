@@ -33,4 +33,14 @@ class JobListProvider extends ChangeNotifier {
     _jobs.add(job);
     notifyListeners();
   }
+
+  // Updates the contents of a specific job in the list of jobs.
+  ///
+  /// The [job] parameter is the job to be updated in the list.
+  ///
+  /// This function does not return anything.
+  Future<void> updateJob(Job job) async {
+    await JobRepository(DatabaseHelper()).update(job);
+    await getAllJobs();
+  }
 }
