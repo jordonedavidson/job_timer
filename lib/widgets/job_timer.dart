@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:job_timer/models/database_helper.dart';
+import 'package:job_timer/models/job.dart';
 import 'package:job_timer/models/time_entry.dart';
 import 'package:job_timer/providers/job_list_provider.dart';
 import 'package:job_timer/repositories/time_entry.dart';
@@ -9,8 +10,8 @@ import 'package:job_timer/widgets/formatted_time.dart';
 import 'package:provider/provider.dart';
 
 class JobTimer extends StatefulWidget {
-  final int jobId;
-  const JobTimer({super.key, required this.jobId});
+  final Job job;
+  const JobTimer({super.key, required this.job});
 
   @override
   State<JobTimer> createState() => _JobTimerState();
@@ -27,7 +28,7 @@ class _JobTimerState extends State<JobTimer> {
   @override
   void initState() {
     super.initState();
-    jobTimer = TimeEntry(jobid: widget.jobId);
+    jobTimer = TimeEntry(jobid: widget.job.id!);
   }
 
   void startTimer() async {
