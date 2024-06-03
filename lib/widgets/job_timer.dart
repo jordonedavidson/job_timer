@@ -106,6 +106,9 @@ class _JobTimerState extends State<JobTimer> {
                     )),
               ],
             ),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
