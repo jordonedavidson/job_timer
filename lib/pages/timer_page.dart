@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_timer/models/job.dart';
-import 'package:job_timer/widgets/timer.dart';
+import 'package:job_timer/widgets/job_timer.dart';
 
 class TimerPage extends StatelessWidget {
   final Job job;

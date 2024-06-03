@@ -5,6 +5,7 @@ import 'package:job_timer/models/database_helper.dart';
 import 'package:job_timer/models/time_entry.dart';
 import 'package:job_timer/providers/job_list_provider.dart';
 import 'package:job_timer/repositories/time_entry.dart';
+import 'package:job_timer/widgets/formatted_time.dart';
 import 'package:provider/provider.dart';
 
 class JobTimer extends StatefulWidget {
@@ -73,9 +74,9 @@ class _JobTimerState extends State<JobTimer> {
       child: Center(
         child: Column(
           children: [
-            Text(
-              '${elapsedTime.inHours.toString().padLeft(2, '0')} h ${elapsedTime.inMinutes.remainder(60).toString().padLeft(2, '0')} m ${elapsedTime.inSeconds.remainder(60).toString().padLeft(2, '0')}',
-              style: const TextStyle(fontSize: 80),
+            FormattedTime(
+              elapsedTime: elapsedTime,
+              fontSize: 80.0,
             ),
             const SizedBox(
               height: 20,

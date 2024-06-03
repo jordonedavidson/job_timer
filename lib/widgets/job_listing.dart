@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:job_timer/models/job.dart';
 import 'package:job_timer/pages/timer_page.dart';
 import 'package:job_timer/providers/job_list_provider.dart';
+import 'package:job_timer/widgets/formatted_time.dart';
 import 'package:provider/provider.dart';
 
 class JobListing extends StatefulWidget {
@@ -64,9 +65,7 @@ Future<ListTile> _buildJobTile(
   return ListTile(
     leading: const Icon(Icons.timer_rounded),
     title: Text(job.name ?? 'No name'),
-    trailing: Text(
-      '${elapsedTime.inHours.toString().padLeft(2, '0')} h ${elapsedTime.inMinutes.remainder(60).toString().padLeft(2, '0')} m ${elapsedTime.inSeconds.remainder(60).toString().padLeft(2, '0')}',
-    ),
+    trailing: FormattedTime(elapsedTime: elapsedTime),
     onTap: () {
       Navigator.push(
         context,
