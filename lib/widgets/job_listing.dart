@@ -62,17 +62,23 @@ Future<ListTile> _buildJobTile(
     BuildContext context, int index, List<Job> jobs) async {
   Job job = jobs[index];
   Duration elapsedTime = await job.totalTime;
+  Color tileColour = index % 2 == 0
+      ? const Color.fromARGB(255, 132, 233, 223)
+      : Colors.white38;
   return ListTile(
-    leading: const Icon(Icons.timer_rounded),
+    leading: IconButton(
+      icon: const Icon(Icons.timer_rounded),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => TimerPage(job: job),
+          ),
+        );
+      },
+    ),
     title: Text(job.name ?? 'No name'),
     trailing: FormattedTime(elapsedTime: elapsedTime),
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => TimerPage(job: job),
-        ),
-      );
-    },
+    tileColor: tileColour,
   );
 }
