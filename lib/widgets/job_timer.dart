@@ -20,6 +20,7 @@ class JobTimer extends StatefulWidget {
 class _JobTimerState extends State<JobTimer> {
   bool isRunning = false;
   Duration elapsedTime = const Duration(seconds: 0);
+  Duration jobTotalTime = const Duration(seconds: 0);
   Timer? timer;
   late TimeEntry jobTimer;
   TimeEntryRepository timeEntryRepository =
@@ -29,6 +30,14 @@ class _JobTimerState extends State<JobTimer> {
   void initState() {
     super.initState();
     jobTimer = TimeEntry(jobid: widget.job.id!);
+    getJobTotalTime();
+  }
+
+  Future<void> getJobTotalTime() async {
+    Duration duration = await widget.job.totalTime;
+    setState(() {
+      jobTotalTime = duration;
+    });
   }
 
   void startTimer() async {
@@ -59,6 +68,7 @@ class _JobTimerState extends State<JobTimer> {
       jobTimer.start = null;
       jobTimer.end = null;
       isRunning = false;
+      getJobTotalTime();
     });
   }
 
@@ -109,6 +119,15 @@ class _JobTimerState extends State<JobTimer> {
             ),
             const SizedBox(
               height: 20,
+            ),
+            Text(
+              'Total time spent on ${widget.job.name}',
+              style: const TextStyle(fontSize: 36.0),
+            ),
+            FormattedTime(
+              elapsedTime: jobTotalTime,
+              fontSize: 80.0,
+              colour: Colors.green,
             ),
           ],
         ),
