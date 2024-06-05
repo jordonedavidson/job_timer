@@ -9,6 +9,7 @@ import 'package:job_timer/providers/job_list_provider.dart';
 import 'package:job_timer/repositories/time_entry.dart';
 import 'package:job_timer/widgets/formatted_time.dart';
 import 'package:intl/intl.dart';
+import 'package:job_timer/widgets/time_entry_table.dart';
 import 'package:provider/provider.dart';
 
 class JobTimer extends StatefulWidget {
@@ -155,118 +156,10 @@ class _JobTimerState extends State<JobTimer> {
                 ),
               ),
             ),
-            Expanded(
-              child: Table(
-                children: [
-                  TableRow(
-                    decoration:
-                        BoxDecoration(color: Theme.of(context).primaryColor),
-                    children: const [
-                      TableCell(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text(
-                              'Date',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text(
-                              'Start',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text(
-                              'End',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      TableCell(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Text(
-                              'Duration',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  ...timeEntries.map(
-                    (entry) => TableRow(
-                      children: [
-                        TableCell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                  dateFormat.format(entry.start!.toLocal()),
-                                  style: const TextStyle(fontSize: 16.0)),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                  timeFormat.format(entry.start!.toLocal()),
-                                  style: const TextStyle(fontSize: 16.0)),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                  timeFormat.format(entry.end!.toLocal()),
-                                  style: const TextStyle(fontSize: 16.0)),
-                            ),
-                          ),
-                        ),
-                        TableCell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                                child: FormattedTime(
-                                    elapsedTime: entry.elapsedTime)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+            TimeEntryTable(
+                timeEntries: timeEntries,
+                dateFormat: dateFormat,
+                timeFormat: timeFormat),
           ],
         ),
       ),
