@@ -21,6 +21,7 @@ class _JobTimerState extends State<JobTimer> {
   bool isRunning = false;
   Duration elapsedTime = const Duration(seconds: 0);
   Duration jobTotalTime = const Duration(seconds: 0);
+  List<TimeEntry> timeEntries = [];
   Timer? timer;
   late TimeEntry jobTimer;
   TimeEntryRepository timeEntryRepository =
@@ -31,6 +32,7 @@ class _JobTimerState extends State<JobTimer> {
     super.initState();
     jobTimer = TimeEntry(jobid: widget.job.id!);
     getJobTotalTime();
+    getTimeEntries();
   }
 
   Future<void> getJobTotalTime() async {
@@ -38,6 +40,11 @@ class _JobTimerState extends State<JobTimer> {
     setState(() {
       jobTotalTime = duration;
     });
+  }
+
+  Future<List<TimeEntry>> getTimeEntries() async {
+    timeEntries = await timeEntryRepository.findByJobId(widget.job.id!);
+    return timeEntries;
   }
 
   void startTimer() async {
@@ -69,6 +76,7 @@ class _JobTimerState extends State<JobTimer> {
       jobTimer.end = null;
       isRunning = false;
       getJobTotalTime();
+      getTimeEntries();
     });
   }
 
@@ -128,6 +136,49 @@ class _JobTimerState extends State<JobTimer> {
               elapsedTime: jobTotalTime,
               fontSize: 80.0,
               colour: Colors.green,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+              width: double.infinity,
+              color: Colors.black12,
+              child: Center(
+                child: Text(
+                  'Time Entries for ${widget.job.name}',
+                  style: const TextStyle(fontSize: 24),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Table(
+                children: [
+                  ...timeEntries.map(
+                    (entry) => TableRow(
+                      children: [
+                        TableCell(
+                          child: Center(
+                            child: Text(entry.start!.toLocal().toString(),
+                                style: const TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                            child: Text(entry.end!.toLocal().toString(),
+                                style: const TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                        TableCell(
+                          child: Center(
+                              child: FormattedTime(
+                                  elapsedTime: entry.elapsedTime)),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),
