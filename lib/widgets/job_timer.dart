@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'package:job_timer/models/database_helper.dart';
 import 'package:job_timer/models/job.dart';
 import 'package:job_timer/models/time_entry.dart';
 import 'package:job_timer/providers/job_list_provider.dart';
 import 'package:job_timer/repositories/time_entry.dart';
 import 'package:job_timer/widgets/formatted_time.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class JobTimer extends StatefulWidget {
@@ -88,6 +90,8 @@ class _JobTimerState extends State<JobTimer> {
 
   @override
   Widget build(BuildContext context) {
+    var dateFormat = DateFormat("yyyy-MM-dd");
+    var timeFormat = DateFormat("HH:mm:ss");
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
       child: Center(
@@ -154,14 +158,21 @@ class _JobTimerState extends State<JobTimer> {
             Expanded(
               child: Table(
                 children: [
-                  const TableRow(
-                    children: [
+                  TableRow(
+                    decoration:
+                        BoxDecoration(color: Theme.of(context).primaryColor),
+                    children: const [
                       TableCell(
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Center(
-                            child:
-                                Text('Start', style: TextStyle(fontSize: 16.0)),
+                            child: Text(
+                              'Date',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -169,8 +180,13 @@ class _JobTimerState extends State<JobTimer> {
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Center(
-                            child:
-                                Text('End', style: TextStyle(fontSize: 16.0)),
+                            child: Text(
+                              'Start',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -178,8 +194,27 @@ class _JobTimerState extends State<JobTimer> {
                         child: Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Center(
-                            child: Text('Duration',
-                                style: TextStyle(fontSize: 16.0)),
+                            child: Text(
+                              'End',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Text(
+                              'Duration',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -192,7 +227,8 @@ class _JobTimerState extends State<JobTimer> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
-                              child: Text(entry.start!.toLocal().toString(),
+                              child: Text(
+                                  dateFormat.format(entry.start!.toLocal()),
                                   style: const TextStyle(fontSize: 16.0)),
                             ),
                           ),
@@ -201,7 +237,18 @@ class _JobTimerState extends State<JobTimer> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
-                              child: Text(entry.end!.toLocal().toString(),
+                              child: Text(
+                                  timeFormat.format(entry.start!.toLocal()),
+                                  style: const TextStyle(fontSize: 16.0)),
+                            ),
+                          ),
+                        ),
+                        TableCell(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(
+                                  timeFormat.format(entry.end!.toLocal()),
                                   style: const TextStyle(fontSize: 16.0)),
                             ),
                           ),

@@ -40,6 +40,7 @@ dependencies:
   sqflite: ^2.3.2
   sqflite_common_ffi: ^2.0.0
   path_provider: ^2.1.2
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -59,10 +60,10 @@ dev_dependencies:
   mockito: ^5.4.4
   build_runner: ^2.4.8
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # For information on the generic Dart part of this file, see the
+  # following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter packages.
+  # The following section is specific to Flutter packages.
   sqflite_common: any
 flutter:
   # The following line ensures that the Material Icons font is
