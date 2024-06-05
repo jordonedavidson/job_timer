@@ -10,7 +10,7 @@ class DatabaseHelper {
   static Database? _database;
   Future<Database> get database async => _database ??= await _initDatabase();
 
-  Future _initDatabase() async {
+  Future<Database> _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, 'job_timer.db');
     return await openDatabase(
@@ -20,7 +20,7 @@ class DatabaseHelper {
     );
   }
 
-  Future _onCreate(Database db, int version) async {
+  Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE jobs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
