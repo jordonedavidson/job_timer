@@ -154,25 +154,65 @@ class _JobTimerState extends State<JobTimer> {
             Expanded(
               child: Table(
                 children: [
+                  const TableRow(
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child:
+                                Text('Start', style: TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child:
+                                Text('End', style: TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Center(
+                            child: Text('Duration',
+                                style: TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   ...timeEntries.map(
                     (entry) => TableRow(
                       children: [
                         TableCell(
-                          child: Center(
-                            child: Text(entry.start!.toLocal().toString(),
-                                style: const TextStyle(fontSize: 16.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(entry.start!.toLocal().toString(),
+                                  style: const TextStyle(fontSize: 16.0)),
+                            ),
                           ),
                         ),
                         TableCell(
-                          child: Center(
-                            child: Text(entry.end!.toLocal().toString(),
-                                style: const TextStyle(fontSize: 16.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(entry.end!.toLocal().toString(),
+                                  style: const TextStyle(fontSize: 16.0)),
+                            ),
                           ),
                         ),
                         TableCell(
-                          child: Center(
-                              child: FormattedTime(
-                                  elapsedTime: entry.elapsedTime)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                                child: FormattedTime(
+                                    elapsedTime: entry.elapsedTime)),
+                          ),
                         ),
                       ],
                     ),
