@@ -10,7 +10,9 @@ class TimerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(job.name!)),
+        title: Center(
+          child: Text(job.name!),
+        ),
       ),
       body: JobTimer(
         job: job,

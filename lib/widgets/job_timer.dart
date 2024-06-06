@@ -94,7 +94,7 @@ class _JobTimerState extends State<JobTimer> {
     var dateFormat = DateFormat("yyyy-MM-dd");
     var timeFormat = DateFormat("HH:mm:ss");
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
       child: Center(
         child: Column(
           children: [

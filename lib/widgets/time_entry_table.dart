@@ -23,112 +23,117 @@ class TimeEntryTable extends StatelessWidget {
   Widget build(BuildContext context) {
     sortTimeEntries();
     return Expanded(
-      child: Table(
+      child: ListView(
         children: [
-          TableRow(
-            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-            children: const [
-              TableCell(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      'Date',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
+          Table(
+            children: [
+              TableRow(
+                decoration:
+                    BoxDecoration(color: Theme.of(context).primaryColor),
+                children: const [
+                  TableCell(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Date',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              TableCell(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      'Start',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
+                  TableCell(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Start',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              TableCell(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      'End',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
+                  TableCell(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'End',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              TableCell(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      'Time',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
+                  TableCell(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Time',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
+              ...timeEntries.map(
+                (entry) => TableRow(
+                  children: [
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(dateFormat.format(entry.start!.toLocal()),
+                              style: const TextStyle(fontSize: 12.0)),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(timeFormat.format(entry.start!.toLocal()),
+                              style: const TextStyle(fontSize: 12.0)),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(timeFormat.format(entry.end!.toLocal()),
+                              style: const TextStyle(fontSize: 12.0)),
+                        ),
+                      ),
+                    ),
+                    TableCell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                            child: FormattedTime(
+                          elapsedTime: entry.elapsedTime,
+                          fontSize: 12.0,
+                        )),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
-          ...timeEntries.map(
-            (entry) => TableRow(
-              children: [
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(dateFormat.format(entry.start!.toLocal()),
-                          style: const TextStyle(fontSize: 12.0)),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(timeFormat.format(entry.start!.toLocal()),
-                          style: const TextStyle(fontSize: 12.0)),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(timeFormat.format(entry.end!.toLocal()),
-                          style: const TextStyle(fontSize: 12.0)),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                        child: FormattedTime(
-                      elapsedTime: entry.elapsedTime,
-                      fontSize: 12.0,
-                    )),
-                  ),
-                ),
-              ],
-            ),
-          )
         ],
       ),
     );
