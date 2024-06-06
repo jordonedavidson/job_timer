@@ -12,7 +12,7 @@ Future main() async {
     // Initialize FFI
     sqfliteFfiInit();
   }
-  databaseFactory = databaseFactoryFfi;
+  databaseFactoryOrNull = databaseFactoryFfi;
 
   runApp(const MyApp());
 }

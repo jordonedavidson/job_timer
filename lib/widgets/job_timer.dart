@@ -100,7 +100,7 @@ class _JobTimerState extends State<JobTimer> {
           children: [
             FormattedTime(
               elapsedTime: elapsedTime,
-              fontSize: 80.0,
+              fontSize: 42.0,
             ),
             const SizedBox(
               height: 20,
@@ -135,24 +135,26 @@ class _JobTimerState extends State<JobTimer> {
             ),
             Text(
               'Total time spent on ${widget.job.name}',
-              style: const TextStyle(fontSize: 36.0),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 32.0),
             ),
             FormattedTime(
               elapsedTime: jobTotalTime,
-              fontSize: 80.0,
+              fontSize: 42.0,
               colour: Colors.green,
             ),
             const SizedBox(
               height: 40,
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 10.0),
+              padding: const EdgeInsets.fromLTRB(0, 2.0, 0, 2.0),
               width: double.infinity,
               color: Colors.black12,
-              child: Center(
+              child: const Center(
                 child: Text(
-                  'Time Entries for ${widget.job.name}',
-                  style: const TextStyle(fontSize: 24),
+                  'Time Entries',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24),
                 ),
               ),
             ),

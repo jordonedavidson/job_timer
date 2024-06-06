@@ -75,7 +75,7 @@ class TimeEntryTable extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      'Duration',
+                      'Time',
                       style: TextStyle(
                         fontSize: 16.0,
                         color: Colors.white,
@@ -94,7 +94,7 @@ class TimeEntryTable extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Text(dateFormat.format(entry.start!.toLocal()),
-                          style: const TextStyle(fontSize: 16.0)),
+                          style: const TextStyle(fontSize: 12.0)),
                     ),
                   ),
                 ),
@@ -103,7 +103,7 @@ class TimeEntryTable extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Text(timeFormat.format(entry.start!.toLocal()),
-                          style: const TextStyle(fontSize: 16.0)),
+                          style: const TextStyle(fontSize: 12.0)),
                     ),
                   ),
                 ),
@@ -112,7 +112,7 @@ class TimeEntryTable extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Text(timeFormat.format(entry.end!.toLocal()),
-                          style: const TextStyle(fontSize: 16.0)),
+                          style: const TextStyle(fontSize: 12.0)),
                     ),
                   ),
                 ),
@@ -120,7 +120,10 @@ class TimeEntryTable extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
-                        child: FormattedTime(elapsedTime: entry.elapsedTime)),
+                        child: FormattedTime(
+                      elapsedTime: entry.elapsedTime,
+                      fontSize: 12.0,
+                    )),
                   ),
                 ),
               ],

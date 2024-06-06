@@ -8,11 +8,24 @@ class DatabaseHelper {
   DatabaseHelper();
 
   static Database? _database;
-  Future<Database> get database async => _database ??= await _initDatabase();
+
+  Future<Database> get database async {
+    printDatabaseStatus();
+    _database ??= await _initDatabase();
+    return _database!;
+  }
+
+  void printDatabaseStatus() {
+    print("_database is null? ${_database == null}");
+  }
 
   Future<Database> _initDatabase() async {
+    print('Initializing database');
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, 'job_timer.db');
+    await Directory(documentsDirectory.path).create(recursive: true);
+    print('Database path: $path');
+    print("db path exists ${await File(path).exists()}");
     return await openDatabase(
       path,
       version: 1,
@@ -20,7 +33,8 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> _onCreate(Database db, int version) async {
+  Future _onCreate(Database db, int version) async {
+    print('Creating tables');
     await db.execute('''
       CREATE TABLE jobs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,5 +49,6 @@ class DatabaseHelper {
       );
       CREATE INDEX time_entries_jobid_index ON time_entries (jobid);
     ''');
+    print('Tables created');
   }
 }
